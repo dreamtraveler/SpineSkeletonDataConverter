@@ -445,13 +445,7 @@ SkeletonData readBinaryData(const Binary& binary) {
         slotData.bone = skeletonData.bones[readVarint(&input, true)].name;
         Color color = readColor(&input);
         if (color != Color{0xff, 0xff, 0xff, 0xff}) slotData.color = color;
-        unsigned char r = readByte(&input);
-        unsigned char g = readByte(&input);
-        unsigned char b = readByte(&input);
-        unsigned char a = readByte(&input);
-        if (!(r == 0xff && g == 0xff && b == 0xff && a == 0xff)) {
-            slotData.darkColor = Color{ r, g, b, a }; 
-        }
+        // Spine 3.5 slots have no dark color; attachment follows the light color.
         slotData.attachmentName = readString(&input);
         slotData.blendMode = static_cast<BlendMode>(readVarint(&input, true));
         skeletonData.slots.push_back(slotData);

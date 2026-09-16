@@ -528,12 +528,7 @@ Binary writeBinaryData(SkeletonData& skeletonData) {
         writeVarint(binary, boneIndex, true);
         if (slot.color) writeColor(binary, slot.color.value());
         else writeColor(binary, Color{0xff, 0xff, 0xff, 0xff});
-        if (slot.darkColor) {
-            writeByte(binary, slot.darkColor.value().r);
-            writeByte(binary, slot.darkColor.value().g);
-            writeByte(binary, slot.darkColor.value().b);
-            writeByte(binary, slot.darkColor.value().a); 
-        } else writeColor(binary, Color{0xff, 0xff, 0xff, 0xff});
+        // Spine 3.5 slots have no dark color, including when downgrading newer data.
         writeString(binary, slot.attachmentName);
         writeVarint(binary, slot.blendMode, true); 
     }
